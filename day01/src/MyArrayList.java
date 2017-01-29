@@ -1,18 +1,18 @@
-public class MyArrayList {
-    private Cow[] elems;
+public class MyArrayList<T> {
+    private T[] elems;
 	private int size;
 
 	public MyArrayList() {
-		elems = new Cow[10];
+		elems = (T[]) new Object[10];
 		size = 0;
 	}
 
 	public MyArrayList(int capacity) {
-		elems = new Cow[capacity];
+		elems = (T[]) new Object[capacity];
 		size = 0;
 	}
 
-	public void add(Cow c) {
+	public void add(T c) {
 		if(size == elems.length){
 		    resize("increase");
 
@@ -25,15 +25,15 @@ public class MyArrayList {
 		return size;
 	}
 
-	public Cow get(int index) {
+	public T get(int index) {
 		if(index < 0 || index >= size) {
 		    throw new IndexOutOfBoundsException();
         }
 		return elems[index];
 	}
 
-	public Cow remove(int index) {
-		Cow removed = get(index);
+	public T remove(int index) {
+		T removed = get(index);
 
 		System.arraycopy(elems, index+1, elems, index, size-index-1);
         size --;
@@ -43,7 +43,7 @@ public class MyArrayList {
 		return removed;
 	}
 
-	public void add(int index, Cow c) {
+	public void add(int index, T c) {
 		get(index); //checks for index out of bounds
 		if(size == elems.length){
 		    resize("increase");
@@ -56,14 +56,14 @@ public class MyArrayList {
 	}
 
 	private void resize(String direction){
-		Cow[] temp;
+		T[] temp;
 
 		if(direction == "increase") {
-			temp = new Cow[elems.length*2];
+			temp = (T[]) new Object[elems.length*2];
 			System.arraycopy(elems, 0, temp, 0,  size);
 		}
         else{
-			temp = new Cow[elems.length/2];
+			temp = (T[]) new Object[elems.length/2];
 			System.arraycopy(elems, 0, temp, 0,  size);
 		}
 
