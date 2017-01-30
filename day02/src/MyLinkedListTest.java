@@ -12,8 +12,9 @@ public class MyLinkedListTest {
 	private static final Chicken LEGOS = new Chicken("Legos", 400, "rainbow");
 
 	// QUESTIONS 1-7. COMMENT THIS LINE FOR GENERICS TESTING
-	// private MyLinkedList chickens;
-	// private MyLinkedList emptyChickens;
+//	 private MyLinkedList chickens;
+//	 private MyLinkedList emptyChickens;
+
 
 	// GENERICS TESTING. COMMENT THIS LINE FOR QUESTIONS 1-7
 	private MyLinkedList<Chicken> chickens;
@@ -24,7 +25,6 @@ public class MyLinkedListTest {
         // QUESTIONS 1-7. COMMENT THIS LINE FOR GENERICS TESTING
         chickens = new MyLinkedList();
 		emptyChickens = new MyLinkedList();
-
         // GENERICS TESTING. COMMENT THIS LINE FOR QUESTIONS 1-7
 		// chickens = new MyLinkedList<>();
 		// emptyChickens = new MyLinkedList<>();
@@ -33,7 +33,6 @@ public class MyLinkedListTest {
 		chickens.add(GEORGY);
 		chickens.add(LILY);
 		chickens.add(JIMI);
-
 
 	}
 
