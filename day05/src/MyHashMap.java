@@ -44,27 +44,62 @@ public class MyHashMap<K, V> implements Map<K, V> {
 	 */
 	protected void makeMaps(int size) {
 		// TODO: Implement this method
+		maps = new ArrayList<MyLinearMap<K,V>>();
+		for(int i =0 ; i < size; i++){
+			maps.add(new MyLinearMap<K, V>());
+		}
 	}
 
 	protected MyLinearMap<K, V> chooseMap(Object key) {
 		// TODO: Implement this method
-		return null;
+		if(key == null){
+			return maps.get(0);
+		}
+		int index = key.hashCode()%maps.size();
+		MyLinearMap<K,V> map = maps.get(index);
+		return map;
 	}
 
 	@Override
 	public boolean containsKey(Object key) {
 		// TODO
-		return false;
+		MyLinearMap<K,V> m = chooseMap(key);
+		return m.containsKey(key);
+
 	}
 
 	@Override
 	public boolean containsValue(Object value) {
 		// TODO
+		Collection<V> valueList = values();
+		for(V val: valueList){
+			if(value == val){
+				return true;
+			}
+		}
 		return false;
 	}
 
 	protected void rehash(double growthFactor) {
 		// TODO: Implement this method
+		List<MyLinearMap<K,V>> temp = new ArrayList<MyLinearMap<K,V>>();
+		for(int i = 0; i <maps.size()*growthFactor; i++){
+			temp.add(new MyLinearMap<K, V>());
+		}
+		for(MyLinearMap<K,V> item: maps){
+			for(K key: item.keySet()){
+				int index;
+				if(key == null){
+					index = 0;
+				}
+				else{
+					index = key.hashCode()%temp.size();
+				}
+				temp.get(index).put(key, item.get(key));
+			}
+		}
+		maps = temp;
+
 	}
 
 	@Override
@@ -76,13 +111,34 @@ public class MyHashMap<K, V> implements Map<K, V> {
 	@Override
 	public V put(K key, V value) {
 		// TODO
-		return null;
+		MyLinearMap<K,V> map = chooseMap(key);
+		size -= map.size();
+		V oldvalue = map.put(key, value);
+		size += map.size();
+		if(size() > ALPHA * maps.size()){
+			rehash(GROWTH_FACTOR);
+		}
+		return oldvalue;
 	}
 
 	@Override
 	public V remove(Object key) {
 		// TODO
-		return null;
+		if(containsKey(key)){
+			MyLinearMap<K,V> map = chooseMap(key);
+			V removedValue = map.remove(key);
+			size--;
+			if((size() < maps.size() * BETA) && (maps.size() > MIN_MAPS)){
+				rehash(SHRINK_FACTOR);
+			}
+
+			return removedValue;
+
+		}
+		else{
+			return null;
+		}
+
 	}
 
 	@Override
