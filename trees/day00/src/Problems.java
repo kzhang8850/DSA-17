@@ -11,8 +11,8 @@ public class Problems {
     private static void balancedBST(BinarySearchTree<Integer> t, List<Integer> a, int start, int end){
         if(start <= end){
             int mid = (start+end)/2;
-            int thing = a.get(mid);
-            t.add(thing);
+            int val = a.get(mid);
+            t.add(val);
             balancedBST(t, a, start, mid -1);
             balancedBST(t, a, mid +1, end);
         }
@@ -22,9 +22,6 @@ public class Problems {
         if(n1.isLeaf() && n2.isLeaf()){
             return true;
         }
-        else if(n1.isLeaf() != n2.isLeaf()){
-            return false;
-        }
         else if(!n1.leftChild.equals(n2.leftChild) && !n1.leftChild.equals(n2.rightChild)){
             return false;
         }
@@ -32,12 +29,7 @@ public class Problems {
             return false;
         }
         else{
-            if(n1.leftChild.equals(n2.leftChild)){
-                return isIsomorphic(n1.leftChild, n2.leftChild) && isIsomorphic(n1.rightChild, n2.rightChild);
-            }
-            else{
-                return isIsomorphic(n1.leftChild, n2.rightChild) && isIsomorphic(n1.rightChild, n2.leftChild);
-            }
+            return (isIsomorphic(n1.leftChild, n2.leftChild) && isIsomorphic(n1.rightChild, n2.rightChild)) ||  (isIsomorphic(n1.leftChild, n2.rightChild) && isIsomorphic(n1.rightChild, n2.leftChild));
 
         }
     }
