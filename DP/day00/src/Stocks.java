@@ -1,5 +1,6 @@
 public class Stocks {
 
+
     public static int maxProfit(int[] prices) {
         int max = 0;
         int bought, sold, profit;
@@ -14,9 +15,10 @@ public class Stocks {
             }
         }
         return max;
+
     }
 
-    public static int maxProfitWithK(int[] prices, int k) {
+    public int maxProfitWithK(int[] prices, int k) {
         // TODO: Optional
         return -1;
     }
