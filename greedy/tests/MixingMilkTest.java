@@ -28,7 +28,6 @@ public class MixingMilkTest {
                 st = new StringTokenizer(f.readLine());
                 price[i] = Integer.parseInt(st.nextToken());
                 units[i] = Integer.parseInt(st.nextToken());
-
             }
 
             solution = MixingMilk.solve(M, N, units, price);

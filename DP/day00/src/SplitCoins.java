@@ -12,29 +12,42 @@ public class SplitCoins {
 
     public int splitCoins(int[] coins) {
 
-        int pile1 = 0;
-        int pile2 = 0;
-//        ArrayList<Integer> coin = new ArrayList<Integer>();
-//        for(int thing:coins){
-//            coin.add(thing);
-//        }
-        HashMap<int[], Integer> memo = new HashMap<>();
-        return coinsDP(pile1, pile2, coins, memo);
+        int diff = 0;
+        int sum = 0;
+        int index = 0;
+        for (int thing: coins) {
+            sum += thing;
+        }
+
+        int[][] memo = new int[sum*2+1][coins.length+1];
+        for (int i = 0; i < memo.length; i++) {
+            for (int j = 0; j < memo[0].length; j++) {
+                memo[i][j] = sum + 1;
+            }
+        }
+        return coinsDP(diff, index, coins, memo, sum);
     }
 
-    private int coinsDP(int pile1, int pile2, int[] coins, HashMap<int[], Integer> memo){
-        if(coins.length == 0){
-            return Math.abs(pile1 - pile2);
+    private int coinsDP(int diff, int index, int[] coins, int[][] memo, int sum){
+        if(index >= coins.length){
+            return Math.abs(diff);
         }
-        else if(memo.containsKey(coins)){
-            return memo.get(coins);
+        else if(memo[diff+sum][index] != (sum +1)){
+            return memo[diff+sum][index];
         }
         else{
-            int coin = coins[0];
-            int diff = Math.min(coinsDP(pile1+coin, pile2, Arrays.copyOfRange(coins, 1, coins.length), memo), coinsDP(pile1, pile2+coin, Arrays.copyOfRange(coins, 1, coins.length), memo));
-            memo.put(coins, diff);
+            int difference = find_min(coinsDP(diff + coins[index], index+1, coins, memo, sum), coinsDP(diff - coins[index], index+1, coins, memo, sum));
+            memo[diff+sum][index] = difference;
 
-            return diff;
+            return Math.abs(difference);
+        }
+    }
+    private int find_min(int a, int b){
+        if(Math.abs(a)<=Math.abs(b)){
+            return a;
+        }
+        else{
+            return b;
         }
     }
 

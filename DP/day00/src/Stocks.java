@@ -2,19 +2,18 @@ public class Stocks {
 
 
     public static int maxProfit(int[] prices) {
-        int max = 0;
-        int bought, sold, profit;
-        for (int i = 0; i < prices.length-1; i++) {
-            bought = prices[i];
-            for (int j = i; j < prices.length; j++) {
-                sold = prices[j];
-                profit = sold - bought;
-                if(profit > max){
-                    max = profit;
-                }
+        int maxProfit = 0;
+        int minPrice = 1000000000;
+        for (int i = 0; i < prices.length; i++) {
+            if(prices[i]<minPrice){
+                minPrice = prices[i];
+            }
+            int profit = prices[i] - minPrice;
+            if(profit>maxProfit){
+                maxProfit = profit;
             }
         }
-        return max;
+        return maxProfit;
 
     }
 
